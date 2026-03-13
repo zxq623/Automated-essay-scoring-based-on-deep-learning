@@ -20,19 +20,11 @@ aes/
 │  └─ storage.py              # SQLite 历史记录存储
 ├─ frontend/
 │  └─ streamlit_app.py        # Streamlit 前端
-├─ model/
-│  ├─ aes.ipynb               # 训练/实验 notebook
-│  └─ aes_all.ipynb
 ├─ data/
-│  ├─ training_set_rel3.tsv   # 训练数据
 │  ├─ test_batch.csv          # 批量测试样例
 │  └─ history.db              # 历史记录数据库
 ├─ uploads/                   # 上传文件归档目录
 ├─ best_fold_model.pt         # 当前后端默认加载模型
-├─ aes_5fold_ensemble.pt      # 其他训练产物
-├─ PROJECT_STATUS.md          # 当前项目进度
-├─ SYSTEM_DESIGN.md           # 系统设计文档
-└─ REQUIREMENTS_ANALYSIS.md   # 需求分析文档
 ```
 
 ## ✨ 主要功能
@@ -47,7 +39,7 @@ aes/
 ### 2. 📦 批量评分
 
 - 前端当前支持上传 `csv`
-- 后端 API 支持上传 `txt` 和 `csv`
+- 后端 API 支持上传 `csv`
 - `csv` 按“无表头、每个单元格都是一篇作文”解析
 - 返回每篇作文的编号、预测分数、文本分析和高频词
 - 上传原文件会归档到 `uploads/`
@@ -67,18 +59,6 @@ aes/
 - 多篇记录详情中的编号显示为 `submission_id-row`
 - 导出的 CSV 使用 `UTF-8 with BOM`，兼容 Excel 打开中文内容
 
-## 🤖 模型说明
-
-训练逻辑主要在 `model/aes.ipynb` 中，当前推理流程如下：
-
-1. 读取作文文本
-2. 使用 `roberta-base` tokenizer 编码
-3. 使用 RoBERTa 提取 `last_hidden_state` 的均值向量
-4. 使用 MLP 回归预测标准化分数 `scaled_score`
-5. 根据 `essay_set` 做反标准化，得到最终整数分
-6. 当 `essay_set=unknown` 时，对多个题型分数区间做归一化融合，输出 `0-100`
-
-后端默认加载根目录下的 `best_fold_model.pt`。
 
 ## 🧩 环境依赖
 

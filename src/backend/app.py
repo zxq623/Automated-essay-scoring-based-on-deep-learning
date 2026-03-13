@@ -145,12 +145,7 @@ def create_app() -> Flask:
             archive_path.write_bytes(content)
 
             try:
-                if filename.endswith(".txt"):
-                    essay = content.decode("utf-8", errors="ignore").strip()
-                    if not essay:
-                        return {"error": "Empty text file"}, 400
-                    rows = [{"essay": essay, "essay_set": "unknown" if is_unknown else default_essay_set}]
-                elif filename.endswith(".csv"):
+                if filename.endswith(".csv"):
                     try:
                         df = pd.read_csv(io.BytesIO(content), header=None, sep=None, engine="python")
                     except Exception:
@@ -164,7 +159,7 @@ def create_app() -> Flask:
                         for essay in essays
                     ]
                 else:
-                    return {"error": "Only .txt and .csv are supported"}, 400
+                    return {"error": "Only .csv is supported"}, 400
 
                 essays = [str(item["essay"]).strip() for item in rows]
 
