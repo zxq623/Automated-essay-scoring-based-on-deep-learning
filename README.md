@@ -31,7 +31,7 @@ aes/
 
 ### 1. ✍️ 单篇评分
 
-- 选择作文题目 `1..8` 或 `unknown`
+- 选择作文题目 `1..8`
 - 输入作文文本
 - 返回预测分数、文本统计和高频词
 - 自动写入历史记录
@@ -135,15 +135,6 @@ Content-Type: application/json
 }
 ```
 
-📝 也支持：
-
-```json
-{
-  "essay": "This is my essay.",
-  "essay_set": "unknown"
-}
-```
-
 ### 📄 文件评分
 
 ```http
@@ -154,7 +145,7 @@ Content-Type: multipart/form-data
 🧾 表单字段：
 
 - `file`:  `csv`
-- `essay_set`: `1..8` 或 `unknown`
+- `essay_set`: `1..8`
 
 ### 📋 历史记录列表
 
@@ -166,7 +157,7 @@ GET /api/history?limit=20&offset=0&essay_set=all&source_type=all
 
 - `limit`
 - `offset`
-- `essay_set`: `all / 1..8 / unknown`
+- `essay_set`: `1..8`
 - `source_type`: `all / text / file`
 
 ### 🔍 历史记录详情
